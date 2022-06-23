@@ -1,0 +1,40 @@
+var budget_client;
+
+
+// html example: https://g6jds.csb.app/range_slider.txt
+$(document).ready(function () {
+    budget_client = 500;
+    $('[name=budget_client]').val(budget_client);
+    swiper_func_budget_client("budget_client", '.slider-number');
+    do_on_range_change_budget_client();
+  });
+
+  $("[name=budget_client]").on("input", function () {
+    budget_client = $('[name=budget_client]').val();
+    swiper_func_budget_client("budget_client", '.slider-number');
+    do_on_range_change_budget_client();
+  });
+
+  function do_on_range_change_budget_client() {
+      $('.budget-number').text(budget_client);
+  if (budget_client > 500 && budget_client < 1500) {
+    $('.marge_agence').text(200);
+  }
+  if (budget_client > 1501 && budget_client < 3000) {
+    $('.marge_agence').text(400);
+  } else if (budget_client > 3001 && budget_client < 6000) {
+    $('.marge_agence').text(600);
+  }
+
+  }
+
+  function swiper_func_budget_client(name, swiper) {
+    name = "[name=" + name + "]";
+    var range_val = $(name).val();
+    range_val = parseFloat(range_val);
+    var range_width = $(name).width() - 10;
+    var range_max = $(name).attr("max");
+    range_width = range_width / range_max;
+    range_width = range_width * (range_val - 1);
+    $(swiper).css({ transform: "translateX(" + range_width + "px)" });
+  }
